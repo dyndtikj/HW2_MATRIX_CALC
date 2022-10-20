@@ -3,8 +3,7 @@ project(hw1_matrix VERSION 0.0.1)
 set(CMAKE_CXX_STANDARD 17)
 
 # Compilation flags
-string(APPEND CMAKE_CXX_FLAGS " -pedantic -Werror -Wall -Wextra")
-string(APPEND CMAKE_CXX_FLAGS " -Wno-unused-command-line-argument")
+string(APPEND CMAKE_CXX_FLAGS " -pedantic -Wall -Wextra -fPIC")
 string(APPEND CMAKE_CXX_FLAGS " -Wshadow -Wnon-virtual-dtor")
 string(APPEND CMAKE_CXX_FLAGS " -O0")
 
