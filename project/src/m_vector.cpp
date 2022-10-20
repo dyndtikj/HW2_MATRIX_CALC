@@ -1,18 +1,5 @@
 #include "m_vector.h"
 
-
-void Print(MVector const &MVector, std::string const &message)
-{
-    if (!message.empty())
-    {
-        std::cout << message << std::endl;
-    }
-    for (size_t i = 0; i < MVector.Size(); ++i)
-    {
-        std::cout << MVector[i] << " ";
-    }
-    std::cout << std::endl;
-}
 MVector::MVector() :arr_(nullptr), size_(0), capacity_(0) { }
 MVector::MVector(const size_t& size, const double& val) : size_(size), capacity_(size) {
     arr_ = new double[capacity_];
@@ -21,17 +8,26 @@ MVector::MVector(const size_t& size, const double& val) : size_(size), capacity_
     }
 }
 
-MVector::MVector(MVector const &other) {
-    // if nullptr - delete also correctly work
+MVector::MVector(MVector const &other) :
+                                        arr_(nullptr),
+                                        capacity_(other.capacity_),
+                                        size_(other.size_){
+    arr_ = new double[other.capacity_];
+    std::copy(other.arr_, &other.arr_[other.size_ - 1] + 1, arr_);
+}
+
+MVector& MVector::operator=(const MVector& other){
     delete[] arr_;
     arr_ = new double[other.capacity_];
     capacity_ = other.capacity_;
     size_ = other.size_;
     std::copy(other.arr_, &other.arr_[other.size_ - 1] + 1, arr_);
+    return *this;
 }
 
-MVector::MVector(const std::initializer_list<double>& list) {
-    size_ = capacity_ = list.size();
+MVector::MVector(const std::initializer_list<double>& list):
+                                                        size_(list.size()),
+                                                        capacity_(list.size()){
     arr_ = new double[capacity_];
 
     // iterate
@@ -42,17 +38,18 @@ MVector::MVector(const std::initializer_list<double>& list) {
 }
 
 double const &MVector::operator[](const size_t& idx) const {
-    if (idx < size_) {
-        return arr_[idx];
+    if (idx >= size_) {
+        throw std::runtime_error("Index out of range vector[]");
     }
-    throw std::runtime_error("Index out of range");
+    return arr_[idx];
 }
 
 double &MVector::operator[](const size_t& idx) {
-    if (idx < size_) {
-        return arr_[idx];
+    if (idx >= size_) {
+        std::cout << "SIZE: " << size_ << "  IDX: " << idx;
+        throw std::runtime_error("Index out of range vector[]");
     }
-    throw std::runtime_error("Index out of range");
+    return arr_[idx];
 }
 
 void MVector::PushBack(const double& value) {

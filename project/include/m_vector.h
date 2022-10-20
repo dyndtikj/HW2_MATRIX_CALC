@@ -1,7 +1,10 @@
 #pragma once
 
-#include <iostream>
 #include <initializer_list>
+#include <cstddef>
+#include <iostream>
+#include <exception>
+
 // type of data - double
 // not template implementation
 class MVector {
@@ -16,6 +19,7 @@ public:
     MVector();
     MVector(const size_t& size, const double& val = 0);
     MVector(MVector const &other);
+    MVector &operator=(const MVector& other);
     MVector(const std::initializer_list<double>& list);
     ~MVector();
 
