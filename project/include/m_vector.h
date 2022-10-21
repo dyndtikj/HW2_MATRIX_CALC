@@ -27,6 +27,7 @@ public:
     size_t Capacity() const;
     void PushBack(const double& val);
     void PopBack();
+    void Print() const;
     double Front() const;
     double Back() const;
 

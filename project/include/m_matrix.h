@@ -41,4 +41,5 @@ public:
     MVector GetRow(const size_t& idx) const;
     MVector GetCol(const size_t& idx) const;
     MVector GetDiag() const;
+    void Print() const;
 };

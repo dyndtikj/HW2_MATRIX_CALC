@@ -46,7 +46,6 @@ double const &MVector::operator[](const size_t& idx) const {
 
 double &MVector::operator[](const size_t& idx) {
     if (idx >= size_) {
-        std::cout << "SIZE: " << size_ << "  IDX: " << idx;
         throw std::runtime_error("Index out of range vector[]");
     }
     return arr_[idx];
@@ -59,7 +58,12 @@ void MVector::PushBack(const double& value) {
     arr_[size_++] = value;
 }
 
-
+void MVector::Print() const {
+    for (size_t i = 0; i < size_; i++){
+        std::cout << arr_[i] << " ";
+    }
+    std::cout << std::endl;
+}
 void MVector::PopBack() {
     if (!size_) {
         throw std::runtime_error("Empty vector PopBack ERROR");

@@ -28,13 +28,7 @@ MMatrix::MMatrix(const MVector &vec, Orientation orient){
         rows_ = capacity_ = 1;
         cols_ = vec.Size();
         arr_ = new MVector[rows_];
-        arr_[0] = MVector({1, 2, 4, 5});
-//        arr_[0] = vec;
-//        for (size_t i = 0; i < rows_; i++){
-//            arr_[i] = new
-////            arr_[i] = *(new MVector(cols_));
-////            arr_[0][i] = vec[i];
-//        }
+        arr_[0] = vec;
     } else {
         cols_ = 1;
         rows_ = capacity_ = vec.Size();
@@ -105,6 +99,15 @@ MVector MMatrix::GetDiag() const {
     return diag;
 }
 
+void MMatrix::Print() const {
+    for (size_t i = 0; i < rows_; i++) {
+        for (size_t j = 0; j < cols_; j++) {
+            std::cout << arr_[i][j] << " ";
+        }
+        std::cout << std::endl;
+    }
+    std::cout << std::endl;
+}
 
 void MMatrix::grow()
 {
