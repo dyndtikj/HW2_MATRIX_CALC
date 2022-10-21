@@ -41,5 +41,31 @@ public:
     MVector GetRow(const size_t& idx) const;
     MVector GetCol(const size_t& idx) const;
     MVector GetDiag() const;
+
+    //5
+    void AddValue(const double & val);
+    void SubValue(const double & val);
+    // With choose opportunity rows/cols;
+    void AddVector(const MVector &v, size_t idx,
+                            Orientation orient = Orientation::Row);
+    void SubVector(const MVector &v, size_t idx,
+                            Orientation orient = Orientation::Row);
     void Print() const;
 };
+
+// 3
+MMatrix operator+(const MMatrix &left, const MMatrix &right);
+MMatrix operator-(const MMatrix &left, const MMatrix &right);
+// multiply element to element  -- NOT standart matrix multiplication
+// standart mul is in MatMul method
+MMatrix operator*(const MMatrix &left, const MMatrix &right);
+
+// 4
+MMatrix operator*(const double &left, const MMatrix &right);
+MVector operator*(const MVector &left, const MMatrix &right);
+MVector operator*(const MMatrix &left, const MVector &right);
+MMatrix MatMul(const MMatrix &left, const MMatrix &right);
+
+//5
+MMatrix operator+(const MMatrix &left, const double &right);
+MMatrix operator-(const MMatrix &left, const double &right);

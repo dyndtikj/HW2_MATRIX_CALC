@@ -33,4 +33,16 @@ public:
 
     double const &operator[](const size_t& idx) const;
     double &operator[](const size_t& idx);
+    // 5
+    void AddValue(const double &val);
+    void SubValue(const double &val);
 };
+
+// 3
+MVector operator+(const MVector &left, const MVector &right);
+MVector operator-(const MVector &left, const MVector &right);
+MVector operator*(const MVector &left, const MVector &right);
+
+// 5
+MVector operator+(const MVector &left, const double &right);
+MVector operator-(const MVector &left, const double &right);

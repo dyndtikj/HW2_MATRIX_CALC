@@ -9,7 +9,6 @@ MVector::MVector(const size_t& size, const double& val) : size_(size), capacity_
 }
 
 MVector::MVector(MVector const &other) :
-                                        arr_(nullptr),
                                         size_(other.size_),
                                         capacity_(other.capacity_){
     arr_ = new double[other.capacity_];
@@ -101,5 +100,67 @@ void MVector::grow() {
     std::copy(arr_, &arr_[size_ - 1] + 1, new_arr);
     delete[] arr_;
     arr_ = new_arr;
+}
+
+// 3
+MVector operator+(const MVector &left, const MVector &right) {
+    if (left.Size() != right.Size()) {
+        throw std::runtime_error("Different sizes of vectors operator+");
+    }
+    auto sum = MVector(left.Size());
+    for (size_t i = 0; i < left.Size(); ++i) {
+        sum[i] = left[i] + right[i];
+    }
+    return sum;
+}
+
+MVector operator-(const MVector &left, const MVector &right) {
+    if (left.Size() != right.Size()) {
+        throw std::runtime_error("Different sizes of vectors operator-");
+    }
+    auto sub = MVector(left.Size());
+    for (size_t i = 0; i < left.Size(); ++i) {
+        sub[i] = left[i] - right[i];
+    }
+    return sub;
+}
+
+MVector operator*(const MVector &left, const MVector &right) {
+    if (left.Size() != right.Size()) {
+        throw std::runtime_error("Different sizes of vectors operator*");
+    }
+    auto mul = MVector(left.Size());
+    for (size_t i = 0; i < left.Size(); ++i) {
+        mul[i] = left[i] * right[i];
+    }
+    return mul;
+}
+
+// 5
+void MVector::AddValue(const double &val){
+    for (size_t i = 0; i < size_; i++){
+        arr_[i] += val;
+    }
+}
+void MVector::SubValue(const double &val){
+    for (size_t i = 0; i < size_; i++){
+        arr_[i] += val;
+    }
+}
+
+MVector operator+(const MVector &left, const double &right){
+    auto sum = MVector(left.Size());
+    for (size_t i = 0; i < left.Size(); ++i) {
+        sum[i] = left[i] + right;
+    }
+    return sum;
+}
+
+MVector operator-(const MVector &left, const double &right){
+    auto sub = MVector(left.Size());
+    for (size_t i = 0; i < left.Size(); ++i) {
+        sub[i] = left[i] + right;
+    }
+    return sub;
 }
 
