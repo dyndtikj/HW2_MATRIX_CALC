@@ -1,3 +1,4 @@
+#include <algorithm>
 #include "m_matrix.h"
 
 MMatrix::MMatrix() : arr_(nullptr), rows_(0), cols_(0), capacity_(0) {}
@@ -5,7 +6,7 @@ MMatrix::MMatrix() : arr_(nullptr), rows_(0), cols_(0), capacity_(0) {}
 MMatrix::MMatrix(const size_t& rows, const size_t& cols, const int& val)
         : rows_(rows), cols_(cols), capacity_(rows){
     arr_ = new MVector[rows_];
-    for (size_t i = 0; i < rows_; ++i) {
+    for (size_t i = 0; i < rows_; i++) {
         arr_[i] = MVector(cols_, val);
     }
 }
@@ -13,7 +14,7 @@ MMatrix::MMatrix(const size_t& rows, const size_t& cols, const int& val)
 MMatrix::MMatrix(MMatrix &other)
         : rows_(other.rows_), cols_(other.cols_), capacity_(other.capacity_) {
     arr_ = new MVector[other.rows_];
-    for (size_t i = 0; i < other.rows_; ++i) {
+    for (size_t i = 0; i < other.rows_; i++) {
         arr_[i] = other.arr_[i];
     }
 }
@@ -84,7 +85,7 @@ MVector MMatrix::GetCol(const size_t& idx) const {
         throw std::runtime_error("Index out of range : method GetCol");
     }
     MVector col(rows_);
-    for (size_t i = 0; i < rows_; ++i) {
+    for (size_t i = 0; i < rows_; i++) {
         col[i] = arr_[i][idx];
     }
     return col;
@@ -93,7 +94,7 @@ MVector MMatrix::GetCol(const size_t& idx) const {
 MVector MMatrix::GetDiag() const {
     size_t size = std::min(rows_, cols_);
     MVector diag(size);
-    for (size_t i = 0; i < size; ++i) {
+    for (size_t i = 0; i < size; i++) {
         diag[i] = arr_[i][i];
     }
     return diag;
@@ -126,8 +127,8 @@ MMatrix operator+(const MMatrix &left, const MMatrix &right){
         throw std::runtime_error("Different sizes of matrixes operator+");
     }
     MMatrix sum(left.Rows(), left.Cols());
-    for (size_t i = 0; i < left.Rows(); ++i) {
-        for (size_t j = 0; j < left.Cols(); ++j) {
+    for (size_t i = 0; i < left.Rows(); i++) {
+        for (size_t j = 0; j < left.Cols(); j++) {
             sum[i][j] = left[i][j] + right[i][j];
         }
     }
@@ -139,8 +140,8 @@ MMatrix operator-(const MMatrix &left, const MMatrix &right){
         throw std::runtime_error("Different sizes of matrixes operator+");
     }
     MMatrix sub(left.Rows(), left.Cols());
-    for (size_t i = 0; i < left.Rows(); ++i) {
-        for (size_t j = 0; j < left.Cols(); ++j) {
+    for (size_t i = 0; i < left.Rows(); i++) {
+        for (size_t j = 0; j < left.Cols(); j++) {
             sub[i][j] = left[i][j] - right[i][j];
         }
     }
@@ -153,8 +154,8 @@ MMatrix operator*(const MMatrix &left, const MMatrix &right){
         throw std::runtime_error("Different sizes of matrixes operator+");
     }
     MMatrix mul(left.Rows(), left.Cols());
-    for (size_t i = 0; i < left.Rows(); ++i) {
-        for (size_t j = 0; j < left.Cols(); ++j) {
+    for (size_t i = 0; i < left.Rows(); i++) {
+        for (size_t j = 0; j < left.Cols(); j++) {
             mul[i][j] = left[i][j] * right[i][j];
         }
     }
@@ -164,8 +165,8 @@ MMatrix operator*(const MMatrix &left, const MMatrix &right){
 // 4
 MMatrix operator*(const double &left, const MMatrix &right){
     MMatrix mul(right.Rows(), right.Cols());
-    for (size_t i = 0; i < right.Rows(); ++i) {
-        for (size_t j = 0; j < right.Cols(); ++j) {
+    for (size_t i = 0; i < right.Rows(); i++) {
+        for (size_t j = 0; j < right.Cols(); j++) {
             mul[i][j] *= left;
         }
     }
@@ -177,11 +178,11 @@ MVector operator*(const MVector &left, const MMatrix &right){
         throw std::runtime_error("Unsuitable sizes of vector and matrix operator*");
     }
     MVector mul(right.Rows());
-    for (size_t i = 0; i < right.Rows(); ++i)
+    for (size_t i = 0; i < right.Rows(); i++)
     {
         // sum of raw * col elements
         double sum = 0;
-        for (size_t j = 0; j < right.Cols(); ++j) {
+        for (size_t j = 0; j < right.Cols(); j++) {
             sum += right[i][j] * left[j];
         }
         mul[i] = sum;
@@ -193,11 +194,11 @@ MVector operator*(const MMatrix &left, const MVector &right){
         throw std::runtime_error("Unsuitable sizes of matrix and vector operator*");
     }
     MVector mul(left.Cols());
-    for (size_t i = 0; i < left.Rows(); ++i)
+    for (size_t i = 0; i < left.Rows(); i++)
     {
         // sum of raw * col elements
         double sum = 0;
-        for (size_t j = 0; j < left.Cols(); ++j) {
+        for (size_t j = 0; j < left.Cols(); j++) {
             sum += left[i][j] * right[j];
         }
         mul[i] = sum;
@@ -209,8 +210,8 @@ MMatrix MatMul(const MMatrix &left, const MMatrix &right){
         throw std::runtime_error("Unsuitable sizes of matrix and matrix operator*");
     }
     MMatrix mul = MMatrix(left.Rows(), right.Cols());
-    for (size_t i = 0; i < left.Rows(); ++i) {
-        for (size_t j = 0; j < right.Cols(); ++j) {
+    for (size_t i = 0; i < left.Rows(); i++) {
+        for (size_t j = 0; j < right.Cols(); j++) {
             // sum of raw * col elements
             double sum = 0;
             for (size_t k = 0; k < right.Rows(); ++k) {
@@ -239,15 +240,55 @@ void MMatrix::SubValue(const double &val) {
 }
 // With choose opportunity rows/cols;
 void MMatrix::AddVector(const MVector &v, size_t idx, Orientation orient) {
-
+    if (orient == Orientation::Row) {
+        if ((v.Size() != cols_)) {
+            throw std::runtime_error("Unsuitable sizes of matrix and matrix operator*");
+        }
+        for (size_t i = 0; i < v.Size(); i++) {
+            arr_[idx][i] += v[i];
+        }
+    } else {
+        if ((v.Size() != rows_)) {
+            throw std::runtime_error("Unsuitable sizes of matrix and matrix operator*");
+        }
+        for (size_t i = 0; i < v.Size(); i++) {
+            arr_[i][idx] += v[i];
+        }
+    }
 }
 void MMatrix::SubVector(const MVector &v, size_t idx, Orientation orient){
-
+    if (orient == Orientation::Row) {
+        if ((v.Size() != cols_)) {
+            throw std::runtime_error("Unsuitable sizes of matrix and matrix operator*");
+        }
+        for (size_t i = 0; i < v.Size(); i++) {
+            arr_[idx][i] -= v[i];
+        }
+    } else {
+        if ((v.Size() != rows_)) {
+            throw std::runtime_error("Unsuitable sizes of matrix and matrix operator*");
+        }
+        for (size_t i = 0; i < v.Size(); i++) {
+            arr_[i][idx] -= v[i];
+        }
+    }
 }
 
 MMatrix operator+(const MMatrix &left, const double &right){
-
+    MMatrix sum (left.Rows(), left.Cols());
+    for (size_t i = 0; i < left.Rows(); i++) {
+        for (size_t j = 0; j < left.Cols(); j++) {
+            sum[i][j] = left[i][j] + right;
+        }
+    }
+    return sum;
 }
 MMatrix operator-(const MMatrix &left, const double &right){
-
+    MMatrix sub (left.Rows(), left.Cols());
+    for (size_t i = 0; i < left.Rows(); i++) {
+        for (size_t j = 0; j < left.Cols(); j++) {
+            sub[i][j] = left[i][j] + right;
+        }
+    }
+    return sub;
 }

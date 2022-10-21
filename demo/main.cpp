@@ -47,5 +47,14 @@ int main(){
     test_methods.GetDiag().Print();
     test_methods.GetCol(1).Print();
     test_methods.GetRow(2).Print();
+    MVector test9({100, 200, 300});
+    test_methods.AddVector(test9, 1);
+    test_methods.Print();
+    test_methods.AddVector(test9, 2, Orientation::Col);
+    test_methods.Print();
+    MMatrix mat1({{1, 2, 3}, {4, 5, 6}});
+    MMatrix mat2({{1, 2}, {3,4}, {5, 6}});
+    auto mul = MatMul(mat1, mat2);;
+    mul.Print();
     return 0;
 }
