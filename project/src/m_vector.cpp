@@ -10,8 +10,8 @@ MVector::MVector(const size_t& size, const double& val) : size_(size), capacity_
 
 MVector::MVector(MVector const &other) :
                                         arr_(nullptr),
-                                        capacity_(other.capacity_),
-                                        size_(other.size_){
+                                        size_(other.size_),
+                                        capacity_(other.capacity_){
     arr_ = new double[other.capacity_];
     std::copy(other.arr_, &other.arr_[other.size_ - 1] + 1, arr_);
 }

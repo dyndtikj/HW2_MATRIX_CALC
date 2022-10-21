@@ -28,5 +28,21 @@ int main(){
         }
         std::cout << std::endl;
     }
+    MMatrix test4(test2, Orientation::Row);
+    std::cout << test4.Rows() << "x" << test4.Cols() << std::endl;
+    for (size_t i = 0; i < test4.Rows(); i++) {
+        for (size_t j = 0; j < test4.Cols(); j++){
+            std::cout << test_matrix[i][j] << " ";
+        }
+        std::cout << std::endl;
+    }
+//    MMatrix test5(test2, Orientation::Col);
+//    std::cout << test5.Rows() << "x" << test5.Cols() << std::endl;
+//    for (size_t i = 0; i < test5.Rows(); i++) {
+//        for (size_t j = 0; j < test5.Cols(); j++){
+//            std::cout << test_matrix[i][j] << " ";
+//        }
+//        std::cout << std::endl;
+//    }
     return 0;
 }
