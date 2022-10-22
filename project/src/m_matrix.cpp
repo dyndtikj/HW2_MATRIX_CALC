@@ -167,7 +167,7 @@ MMatrix operator*(const double &left, const MMatrix &right){
     MMatrix mul(right.Rows(), right.Cols());
     for (size_t i = 0; i < right.Rows(); i++) {
         for (size_t j = 0; j < right.Cols(); j++) {
-            mul[i][j] *= left;
+            mul[i][j] = left * right[i][j];
         }
     }
     return mul;
@@ -291,4 +291,80 @@ MMatrix operator-(const MMatrix &left, const double &right){
         }
     }
     return sub;
+}
+
+// 6
+MMatrix MMatrix::GetTransponsed() const {
+    MMatrix res(cols_, rows_);
+    for (size_t i = 0; i < rows_; i++ ){
+        for (size_t j = 0; j < cols_; j++){
+            res[j][i] = arr_[i][j];
+        }
+    }
+    return res;
+}
+
+double MMatrix::GetMinor(const size_t &row, const size_t &col) const {
+    MMatrix del_i_j = DelRowCol(row, col);
+    double det = del_i_j.GetDet();
+    return det;
+}
+
+MMatrix MMatrix::GetAdded() const{
+    MMatrix added(rows_, cols_);
+    int sign = 1;
+    for (size_t i = 0; i < rows_; ++i) {
+        for (size_t j = 0; j < cols_; ++j) {
+            added[i][j] = sign * GetMinor(i, j);
+            sign *= -1;
+        }
+    }
+    return added;
+}
+
+MMatrix MMatrix::GetIverted() const {
+    double det = GetDet();
+    if (det == 0) {
+        return MMatrix{};
+    }
+    MMatrix invert = (1 / det) * GetAdded().GetTransponsed();
+    return invert;
+}
+
+MMatrix MMatrix::DelRowCol(const size_t &row, const size_t &col) const {
+    if (!rows_ || !cols_){
+        throw std::runtime_error("Cant delete Row/ Column from empty matrix method DelColRow()");
+    }
+    if (row >= rows_ || col >= cols_){
+        throw std::runtime_error("Index out of range method DelColRow()");
+    }
+
+    MMatrix res(rows_-1, cols_-1);
+    size_t res_idx_r = 0, res_idx_c = 0;
+    for (size_t i = 0; i < rows_; i++, res_idx_c = 0){
+        if (i == row) continue;
+        for(size_t j = 0; j < cols_; j++){
+            if (j == col) continue;
+            res[res_idx_r][res_idx_c++] = arr_[i][j];
+        }
+        res_idx_r++;
+    }
+    return res;
+}
+
+// 7
+double MMatrix::GetDet() const {
+    if (cols_ != rows_){
+        throw std::runtime_error("Determinant requires NxN matrixes");
+    }
+    if (rows_ == 2){
+        return arr_[0][0] * arr_ [1][1] - arr_[0][1] * arr_ [1][0];
+    }
+    int sign = 1;
+    double det = 0;
+    for (size_t i = 0; i < cols_; i++){
+        det += sign * arr_[0][i] * GetMinor(0, i);
+        sign *= -1;
+    }
+    return det;
 }

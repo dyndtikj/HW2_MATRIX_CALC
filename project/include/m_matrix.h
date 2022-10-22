@@ -50,6 +50,16 @@ public:
                             Orientation orient = Orientation::Row);
     void SubVector(const MVector &v, size_t idx,
                             Orientation orient = Orientation::Row);
+    // 6
+    MMatrix GetTransponsed() const;
+    MMatrix GetIverted() const;
+    MMatrix GetAdded() const;
+    double GetMinor(const size_t& row, const size_t& col) const;
+    MMatrix DelRowCol(const size_t& row, const size_t& col) const;
+
+    // 7
+    double GetDet() const;
+
     void Print() const;
 };
 
