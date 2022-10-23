@@ -28,6 +28,6 @@ print_header "RUN cpplint"
 check_log "cpplint ./tests/*.cpp" "Can't open for reading"
 
 print_header "RUN cppcheck"
-check_log "cppcheck ./tests/*.cpp --enable=all --inconclusive --error-exitcode=1 --suppress=missingIncludeSystem" "\(information\)"
+check_log "cppcheck ./tests/*.cpp --enable=all --inconclusive --error-exitcode=1 --suppress=missingIncludeSystem --suppress=noExplicitConstructor" "\(information\)"
 
 print_header "SUCCESS"
