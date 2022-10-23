@@ -12,6 +12,8 @@ jobs:
     container: leshiy1295/gcc_linters_valgrind_cmake_gtest
     steps:
       - uses: actions/checkout@v3
+      - name: prepare
+        run: sudo apt install clang-format
       - name: format
         run: make format
 
@@ -32,15 +34,6 @@ jobs:
            name: artifact_build
            path: build/
 
-  valgrind:
-    runs-on: ubuntu-latest
-    container: leshiy1295/gcc_linters_valgrind_cmake_gtest
-    needs: [build]
-    steps:
-      - uses: actions/checkout@v3
-      - name: valgrind
-        run: make valgrind
-
   tests:
     runs-on: ubuntu-latest
     container: leshiy1295/gcc_linters_valgrind_cmake_gtest
@@ -55,6 +48,15 @@ jobs:
           name: artifact_test
           path: build/
 
+  valgrind:
+    runs-on: ubuntu-latest
+    container: leshiy1295/gcc_linters_valgrind_cmake_gtest
+    needs: [ tests ]
+    steps:
+      - uses: actions/checkout@v3
+      - name: valgrind
+        run: make valgrind
+
   coverage:
     runs-on: ubuntu-latest
     container: leshiy1295/gcc_linters_valgrind_cmake_gtest
@@ -65,7 +67,7 @@ jobs:
       - name: get test artifact
         uses: actions/download-artifact@v3
         with:
-          name: test-artifact
+          name: artifact_test
           path: build/
 
       - name: coverage
