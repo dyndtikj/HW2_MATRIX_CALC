@@ -51,7 +51,7 @@ jobs:
   valgrind_and_cov:
     runs-on: ubuntu-latest
     container: leshiy1295/gcc_linters_valgrind_cmake_gtest
-    needs: [tests]
+    needs: [unit_tests]
     steps:
       - uses: actions/checkout@v3
 
