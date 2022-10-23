@@ -1,7 +1,7 @@
 # Ignore directories created by IDE
 *.sublime-project
 *.sublime-workspace
-
+.info
 .vscode/
 *.code-workspace
 **/.DS_Store

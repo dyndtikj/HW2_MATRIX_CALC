@@ -14,6 +14,8 @@ add_executable(${PROJECT_NAME}
 target_link_libraries(${PROJECT_NAME} hw1_matrix)
 
 if(BUILD_TESTS)
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fprofile-arcs -ftest-coverage")
+    set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -coverage -lgcov" )
     add_subdirectory(tests)
 endif()
 

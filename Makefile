@@ -1,9 +1,8 @@
 DEMO_DIR = build/hw1_matrix_main
 TESTS_DIR = build/tests/tests
+.PHONY: all build rebuild check test coverage clean linters valgrind
 
-.PHONY: all build rebuild check test coverage clean
-
-all: clean check build test
+all: clean format linters build test run
 
 build: clean
 	scripts/build.sh
@@ -14,15 +13,20 @@ test:
 
 rebuild: clean build
 
-check:
-	scripts/checks.sh
-
 run: build
 	./${DEMO_DIR}
 
-coverage: build
+coverage:
 	scripts/coverage.sh ./${TESTS_DIR}
 
+format:
+	scripts/format.sh
+
+valgrind:
+	scripts/valgrind.sh ${TESTS_DIR}
+
+linters:
+	scripts/linters.sh
 
 clean:
 	rm -rf build/
