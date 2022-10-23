@@ -16,7 +16,6 @@ jobs:
         run: make format
 
       - name: linters
-        uses: actions/checkout@v3
         run: make linters
 
   build:
@@ -33,41 +32,41 @@ jobs:
            name: artifact_build
            path: build/
 
-#  valgrind:
-#    runs-on: ubuntu-latest
-#    container: leshiy1295/gcc_linters_valgrind_cmake_gtest
-#    needs: [build]
-#    steps:
-#      - uses: actions/checkout@v3
-#      - name: valgrind
-#        run: make valgrind
-#
-#  tests:
-#    runs-on: ubuntu-latest
-#    container: leshiy1295/gcc_linters_valgrind_cmake_gtest
-#    steps:
-#      - uses: actions/checkout@v2
-#      - name: run tests
-#        run: make test
-#
-#      - name: upload test artifact
-#        uses: actions/upload-artifact@v3
-#        with:
-#          name: artifact_test
-#          path: build/
-#
-#  coverage:
-#    runs-on: ubuntu-latest
-#    container: leshiy1295/gcc_linters_valgrind_cmake_gtest
-#    needs: [tests]
-#    steps:
-#      - uses: actions/checkout@v3
-#
-#      - name: get test artifact
-#        uses: actions/download-artifact@v3
-#        with:
-#          name: test-artifact
-#          path: build/
-#
-#      - name: coverage
-#        run: make coverage
+  valgrind:
+    runs-on: ubuntu-latest
+    container: leshiy1295/gcc_linters_valgrind_cmake_gtest
+    needs: [build]
+    steps:
+      - uses: actions/checkout@v3
+      - name: valgrind
+        run: make valgrind
+
+  tests:
+    runs-on: ubuntu-latest
+    container: leshiy1295/gcc_linters_valgrind_cmake_gtest
+    steps:
+      - uses: actions/checkout@v2
+      - name: run tests
+        run: make test
+
+      - name: upload test artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: artifact_test
+          path: build/
+
+  coverage:
+    runs-on: ubuntu-latest
+    container: leshiy1295/gcc_linters_valgrind_cmake_gtest
+    needs: [tests]
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: get test artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: test-artifact
+          path: build/
+
+      - name: coverage
+        run: make coverage
