@@ -1,4 +1,5 @@
 #include "m_vector.h"
+#include <cmath>
 
 MVector::MVector() :arr_(nullptr), size_(0), capacity_(0) { }
 MVector::MVector(const size_t& size, const double& val) : size_(size), capacity_(size) {
@@ -164,3 +165,19 @@ MVector operator-(const MVector &left, const double &right){
     return sub;
 }
 
+MVector MVector::operator()(const size_t& begin, const size_t& end, const int& step) const {
+    MVector res;
+    if (begin >= size_ || end > size_ ){
+        throw std::runtime_error("Slice incorrect arguments");
+    }
+    if (step > 0) {
+        for (size_t i = begin; i < end; i += step) {
+            res.PushBack(arr_[i]);
+        }
+    } else {
+        for (size_t i = end - 1; i < begin; i += step) {
+            res.PushBack(arr_[i]);
+        }
+    }
+    return res;
+}

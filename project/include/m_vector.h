@@ -36,6 +36,10 @@ public:
     // 5
     void AddValue(const double &val);
     void SubValue(const double &val);
+    // extra (1)
+    // a(1, 10, 2)
+    MVector operator()(const size_t& begin, const size_t& end, const int& step = 1) const;
+
 };
 
 // 3

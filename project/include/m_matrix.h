@@ -5,6 +5,7 @@
 #include <stdexcept>
 #include <exception>
 #include <utility>
+#include "slice.h"
 
 enum class Orientation{
     Row = 0,
@@ -17,7 +18,6 @@ private:
     size_t rows_;
     size_t cols_;
     size_t capacity_;
-
 private:
     void grow();
 public:
@@ -28,12 +28,16 @@ public:
     // vector - row by default
     MMatrix(const MVector &vec, Orientation orient = Orientation::Row);
     MMatrix(MMatrix &other);
+    MMatrix &operator=(const MMatrix& other);
     MMatrix(const std::initializer_list<std::initializer_list<double>>& list);
     ~MMatrix();
 
     size_t Rows() const;
     size_t Cols() const;
     size_t Capacity() const;
+
+    void PushBackR(const MVector& row);
+    void PushBackC(const MVector& col);
 
     // 1
     MVector &operator[](const size_t& idx);
@@ -59,6 +63,14 @@ public:
 
     // 7
     double GetDet() const;
+
+    // extra (1)
+    MMatrix operator()(const size_t& begin, const size_t& end, const int& step = 1,
+                       Orientation orient = Orientation::Row) const;
+    // mat({{1, 10, 1}, {2, 5, 2}})
+    MMatrix operator()(const Slice& row_slice, const Slice& col_slice) const;
+    MMatrix SliceR(const size_t& begin, const size_t& end, const int& step = 1) const;
+    MMatrix SliceC(const size_t& begin, const size_t& end, const int& step = 1) const;
 
     void Print() const;
 };

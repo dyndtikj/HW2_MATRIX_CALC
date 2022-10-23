@@ -57,14 +57,26 @@ int main(){
 //    auto mul = MatMul(mat1, mat2);;
 //    mul.Print();
 //
-    MMatrix test123{{1, 5, 2}, {7, 6, 8}, {12, 9, 10}};
-    test123.Print();
-
-    std::cout << "Det = " << test123.GetDet() << std::endl;
-    MMatrix test123_I = test123.GetIverted();
-    test123_I.Print();
-    MMatrix test123_T = test123.GetTransponsed();
-    test123_T.Print();
-
+//    MMatrix test123{{1, 5, 2}, {7, 6, 8}, {12, 9, 10}};
+//    test123.Print();
+//
+//    std::cout << "Det = " << test123.GetDet() << std::endl;
+//    MMatrix test123_I = test123.GetIverted();
+//    test123_I.Print();
+//    MMatrix test123_T = test123.GetTransponsed();
+//    test123_T.Print();
+    MMatrix test121;
+    test121.PushBackC({1,2 ,3});
+    test121.Print();
+    test121.PushBackC({11,21 ,13});
+    test121.Print();
+    test121.PushBackC({111,211 ,131});
+    test121.Print();
+//    MMatrix col = test121.GetCol(1);
+//    col.Print();
+    MMatrix slice = test121({0, 2 }, {0, 3, 2});
+    slice.Print();
+//    // Must fail
+    // test121.PushBackR({1, 4,2 ,3});
     return 0;
 }

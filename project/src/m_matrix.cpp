@@ -13,10 +13,21 @@ MMatrix::MMatrix(const size_t& rows, const size_t& cols, const int& val)
 
 MMatrix::MMatrix(MMatrix &other)
         : rows_(other.rows_), cols_(other.cols_), capacity_(other.capacity_) {
+//    delete []arr_;
     arr_ = new MVector[other.rows_];
     for (size_t i = 0; i < other.rows_; i++) {
         arr_[i] = other.arr_[i];
     }
+}
+
+MMatrix &MMatrix::operator=(const MMatrix& other){
+    delete[] arr_;
+    arr_ = new MVector[other.rows_];
+    capacity_ = other.capacity_;
+    rows_ = other.rows_;
+    cols_ = other.cols_;
+    std::copy(other.arr_, &other.arr_[other.rows_ - 1] + 1, arr_);
+    return *this;
 }
 
 MMatrix::MMatrix(MVector *vectors, const size_t& size) :
@@ -59,6 +70,45 @@ MMatrix::~MMatrix() { delete[] arr_; }
 size_t MMatrix::Rows() const { return rows_; }
 size_t MMatrix::Cols() const { return cols_; }
 size_t MMatrix::Capacity() const {return  capacity_; }
+
+void MMatrix::grow() {
+    if (!capacity_)
+        capacity_++;
+    else
+        capacity_ *= 2;
+    auto new_arr = new MVector[capacity_];
+    std::copy(arr_, &arr_[rows_ - 1] + 1, new_arr);
+    delete[] arr_;
+    arr_ = new_arr;
+}
+
+void MMatrix::PushBackR(const MVector& row){
+    if (rows_ > 0 && row.Size() != cols_) {
+        throw std::runtime_error("Push back incorrect size vector as row");
+    }
+    if (!rows_) {
+        cols_ = row.Size();
+    }
+    if (rows_ == capacity_) {
+        grow();
+    }
+    arr_[rows_++] = MVector(row);
+}
+void MMatrix::PushBackC(const MVector& col){
+    if (rows_ > 0 && col.Size() != rows_) {
+        throw std::runtime_error("Push back incorrect size vector as column");
+    }
+    if (!rows_) {
+        rows_ = col.Size();
+        capacity_ = rows_;
+        arr_ = new MVector[rows_];
+    }
+    for (size_t i = 0; i < col.Size(); i++){
+        arr_[i].PushBack(col[i]);
+    }
+    cols_++;
+}
+
 
 MVector &MMatrix::operator[](const size_t& idx) {
     if (idx >= rows_) {
@@ -110,17 +160,6 @@ void MMatrix::Print() const {
     std::cout << std::endl;
 }
 
-void MMatrix::grow()
-{
-    if (!capacity_)
-        capacity_++;
-    else
-        capacity_ *= 2;
-    auto new_arr = new MVector[capacity_];
-    std::copy(arr_, &arr_[rows_ - 1] + 1, new_arr);
-    delete[] arr_;
-    arr_ = new_arr;
-}
 // 3
 MMatrix operator+(const MMatrix &left, const MMatrix &right){
     if ((left.Rows() != right.Rows()) || (left.Cols() != right.Cols())) {
@@ -367,4 +406,51 @@ double MMatrix::GetDet() const {
         sign *= -1;
     }
     return det;
+}
+MMatrix MMatrix::operator()(const size_t& begin, const size_t& end, const int& step,
+                   Orientation orient) const{
+    if (orient == Orientation::Row){
+        MMatrix res;
+        if (begin >= rows_ || end > rows_){
+            throw std::runtime_error("Slice incorrect arguments");
+        }
+        if (step > 0) {
+            for (size_t i = begin; i < end; i += step) {
+                res.PushBackR(GetRow(i));
+            }
+        } else {
+            for (size_t i = end - 1; i < begin; i += step) {
+                res.PushBackR(GetRow(i));
+            }
+        }
+        return res;
+    } else {
+        MMatrix res;
+        if (begin >= cols_ || end > cols_){
+            throw std::runtime_error("Slice incorrect arguments");
+        }
+        if (step > 0) {
+            for (size_t i = begin; i < end; i += step) {
+                res.PushBackC(GetCol(i));
+            }
+        } else {
+            for (size_t i = end - 1; i < begin; i += step) {
+                res.PushBackC(GetCol(i));
+            }
+        }
+        return res;
+    }
+}
+// mat({{1, 10, 1}, {2, 5, 2}})
+MMatrix MMatrix::operator()(const Slice& row_slice, const Slice& col_slice) const {
+    MMatrix res = this->operator()(row_slice.Begin(), row_slice.End(), row_slice.Step());
+    res = res(col_slice.Begin(), col_slice.End(), col_slice.Step(), Orientation::Col);
+    return res;
+}
+
+MMatrix MMatrix::SliceR(const size_t& begin, const size_t& end, const int& step) const {
+    return this->operator()(begin, end, step, Orientation::Row);
+}
+MMatrix MMatrix::SliceC(const size_t& begin, const size_t& end, const int& step) const {
+    return this->operator()(begin, end, step, Orientation::Col);
 }
