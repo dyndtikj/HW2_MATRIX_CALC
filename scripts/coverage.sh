@@ -8,7 +8,3 @@ TESTS="build/tests/tests"
 
 lcov -t tests -o ./build/tests/coverage_report.info -c -d ./build/tests
 	genhtml -o ./build/tests/coverage_report ./build/tests/coverage_report.info
-
-
-#lcov -t $TESTS -o coverage.info -c
-#genhtml -o build/report/ coverage.info
