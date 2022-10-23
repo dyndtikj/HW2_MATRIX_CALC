@@ -18,10 +18,10 @@ class MVector {
 
  public:
   MVector();
-  MVector(const size_t &size, const double &val = 0);
+  explicit MVector(const size_t &size, const double &val = 0);
   MVector(MVector const &other);
   MVector &operator=(const MVector &other);
-  MVector(const std::initializer_list<double> &list);
+  explicit MVector(const std::initializer_list<double> &list);
   ~MVector();
 
   size_t Size() const;

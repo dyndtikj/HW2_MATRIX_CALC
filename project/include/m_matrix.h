@@ -26,10 +26,10 @@ class MMatrix {
   MMatrix(const size_t &rows, const size_t &cols, const int &val = 0);
   MMatrix(MVector *vectors, const size_t &rows);
   // vector - row by default
-  MMatrix(const MVector &vec, Orientation orient = Orientation::Row);
+  explicit MMatrix(const MVector &vec, Orientation orient = Orientation::Row);
   MMatrix(MMatrix &other);
   MMatrix &operator=(const MMatrix &other);
-  MMatrix(const std::initializer_list<std::initializer_list<double>> &list);
+  explicit MMatrix(const std::initializer_list<std::initializer_list<double>> &list);
   ~MMatrix();
 
   size_t Rows() const;

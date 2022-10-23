@@ -13,7 +13,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: prepare
-        run: apt install clang-format
+        run: apt install clang-format -y
       - name: format
         run: make format
 
@@ -62,7 +62,7 @@ jobs:
           path: build/
 
       - name: prepare
-        run: apt install lcov
+        run: apt install lcov -y
 
       - name: coverage
         run: make coverage
