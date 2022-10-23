@@ -48,7 +48,7 @@ jobs:
           name: artifact_test
           path: build/
 
-  valgrind&coverage:
+  valgrind_and_cov:
     runs-on: ubuntu-latest
     container: leshiy1295/gcc_linters_valgrind_cmake_gtest
     needs: [tests]
