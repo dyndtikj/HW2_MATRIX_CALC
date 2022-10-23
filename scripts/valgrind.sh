@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-TEST_FILES=${@}
+TEST_FILES="build/tests/tests"
 
 VG_LOG="./build/valgrind.log"
 
