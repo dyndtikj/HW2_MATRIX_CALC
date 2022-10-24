@@ -78,5 +78,9 @@ int main(){
     slice.Print();
 //    // Must fail
     // test121.PushBackR({1, 4,2 ,3});
+
+    MVector vec{1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+    MVector res2 = vec(0, 8, 3);
+    res2.Print();
     return 0;
 }

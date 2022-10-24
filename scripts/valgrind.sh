@@ -4,8 +4,6 @@ TEST_FILES="./build/tests/tests"
 
 VG_LOG="./build/valgrind.log"
 
-chmod a+rwx ${TEST_FILES}
-
 NO_LOST_PATTERN="All heap blocks were freed -- no leaks are possible"
 NO_ERROR_PATTERN="ERROR SUMMARY: 0 errors"
 
