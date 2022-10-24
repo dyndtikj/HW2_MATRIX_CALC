@@ -1,7 +1,6 @@
 #include <gtest/gtest.h>
-
 #include "m_vector.h"
-
+#include "m_matrix.h"
 bool CmpVec(const MVector& vec, const std::initializer_list<double>& il){
     if (vec.Size() != il.size()) {
         return false;
@@ -107,7 +106,7 @@ TEST(TestOperatorsVector, AccessInIndex)
     EXPECT_THROW(vec[-2], std::runtime_error);
 }
 
-TEST(TestOperatorsVector, ArithmeticVectors) {
+TEST(TestOperatorsVector, WithVectors) {
     MVector vec1{1, 2, 3, 4, 5};
     MVector vec2{11, 12, 13, 14, 15};
     MVector vec3{111, 112, 113, 114, 115, 116};
@@ -140,7 +139,10 @@ TEST(TestOperatorsVector, ArithmeticVectors) {
     EXPECT_TRUE(CmpVec(res6, {2, 4, 6, 8, 10}));
 }
 
-TEST(TestOperatorsVector, ArithmeticValues) {
+TEST(TestOperatorsVector, WithMatrixes) {
+//    MVector &operator*=(MVector &left, MMatrix &right);
+}
+TEST(TestOperatorsVector, WithValues) {
     MVector vec2{5, 6, 7, 8, 9, 10};
     MVector res1 = vec2 * 3;
     EXPECT_TRUE(CmpVec(res1, {15, 18, 21, 24, 27, 30}));
