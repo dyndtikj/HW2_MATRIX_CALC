@@ -21,4 +21,11 @@ int main(){
     test121.PushBackC({111,211 ,131});
     test121.Print();
 
+    MMatrix mat({
+                        {1, 2, 3, 4},
+                        {5, 6, 7, 8},
+                        {9, 10, 11, 12},
+                });
+    auto res = mat.SliceC(0, 2, 1);
+    res.Print();
 }

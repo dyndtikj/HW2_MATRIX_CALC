@@ -388,7 +388,7 @@ MMatrix operator-(const MMatrix &left, const double &right) {
     MMatrix sub(left.Rows(), left.Cols());
     for (size_t i = 0; i < left.Rows(); i++) {
         for (size_t j = 0; j < left.Cols(); j++) {
-            sub[i][j] = left[i][j] + right;
+            sub[i][j] = left[i][j] - right;
         }
     }
     return sub;

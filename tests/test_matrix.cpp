@@ -9,7 +9,7 @@ bool CmpMat(const MMatrix& mat, std::initializer_list<std::initializer_list<doub
     if (mat.Rows() != il.size()) {
         return false;
     }
-    for (size_t i = 0; i < il.size(); i++) {
+    for (size_t i = 0; i < mat.Rows(); i++) {
         for (size_t j = 0; j < mat.Cols(); j++) {
             // double numbers compare ...
             if (std::abs(mat[i][j]- *((il.begin() + i)->begin() +j)) > 0.00000001) {
@@ -178,8 +178,8 @@ TEST(TestOperatorsMatrixMatrix, OpPlusAssign){
 TEST(TestOperatorsMatrixMatrix, OpMinusAssign){
     MMatrix mat1({{1, 2},{3, 4}});
     MMatrix mat2({{11, 12}, {13, 14}});
-    mat1 -= mat2;
-    EXPECT_TRUE(CmpMat(mat1,{{10, 10}, {10, 10}}));
+    mat2 -= mat1;
+    EXPECT_TRUE(CmpMat(mat2,{{10, 10}, {10, 10}}));
 }
 TEST(TestOperatorsMatrixMatrix, OpMulAssign){
     MMatrix mat1({{1, 2},{3, 4}});
@@ -269,7 +269,7 @@ TEST(TestFuncMatrix, AdMVector){
     EXPECT_TRUE(CmpMat(mat, {{2, 4, 6}, {4, 5, 6}, {7, 8, 9}}));
     MMatrix mat1({{1, 2, 3}, {4, 5, 6}, {7, 8, 9}});
     MVector vec1({1, 2, 3});
-    mat.AddVector(vec, 0, Orientation::Col);
+    mat1.AddVector(vec, 0, Orientation::Col);
     EXPECT_TRUE(CmpMat(mat1, {{2, 2, 3}, {6, 5, 6}, {10, 8, 9}}));
 }
 TEST(TestFuncMatrix, SubVector) {
@@ -282,7 +282,7 @@ TEST(TestFuncMatrix, SubVector) {
     EXPECT_TRUE(CmpMat(mat, {{0, 0 ,0}, {4, 5, 6}, {7, 8, 9}}));
     MMatrix mat1({{1, 2, 3}, {4, 5, 6}, {7, 8, 9}});
     MVector vec1({1, 2, 3});
-    mat.SubVector(vec, 0, Orientation::Col);
+    mat1.SubVector(vec, 0, Orientation::Col);
     EXPECT_TRUE(CmpMat(mat1, {{0, 2, 3}, {2, 5, 6}, {4, 8, 9}}));
 }
 TEST(TestGetFuncMatrix, GetTransposed) {
@@ -294,15 +294,15 @@ TEST(TestGetFuncMatrix, GetInverted) {
 //MMatrix GetIverted() const;
     MMatrix mat({{1,6, 1}, {1, 2, 5}, {1,3, 5}});
 
-    auto mat2 = mat.GetIverted();
-    EXPECT_TRUE(CmpMat(mat, {{1.25, 6.75, -7 }, {0, -1, 1 } ,{-0.25 , -0.75 ,1 }}));
+    MMatrix mat2 = mat.GetIverted();
+    EXPECT_TRUE(CmpMat(mat2, {{1.25, 6.75, -7 }, {0, -1, 1 } ,{-0.25 , -0.75 ,1 }}));
 }
 TEST(TestGetFuncMatrix, GetAdded) {
 //    MMatrix GetAdded() const;
     MMatrix mat({{1,6, 1}, {1, 2, 5}, {1,3, 5}});
 
     auto mat2 = mat.GetAdded();
-    EXPECT_TRUE(CmpMat(mat, {{-5, 0, 1}, {-27, 4, 3 } ,{28 ,-4  ,-4 }}));
+    EXPECT_TRUE(CmpMat(mat2, {{-5, 0, 1}, {-27, 4, 3 } ,{28 ,-4  ,-4 }}));
 }
 TEST(TestGetFuncMatrix, GetMinor) {
 //double GetMinor(const size_t &row, const size_t &col) const;
@@ -361,6 +361,6 @@ TEST(TestFuncMatrix, SliceCol) {
                         {5, 6, 7, 8},
                         {9, 10, 11, 12},
                 });
-    auto res = mat.SliceC(0, 4, 2);
-    EXPECT_TRUE(CmpMat(res, {{1, 5,  9},{3, 7, 11}}));
+    auto res = mat.SliceC(0, 2, 1);
+    EXPECT_TRUE(CmpMat(res, {{1,2}, {5, 6},{9, 10}}));
 }
