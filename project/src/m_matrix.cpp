@@ -33,9 +33,10 @@ MMatrix &MMatrix::operator=(const MMatrix &other) {
 
 MMatrix::MMatrix(MVector *vectors, const size_t &size)
     : arr_(vectors), rows_(size), cols_(vectors[0].Size()), capacity_(rows_) {
-    for (size_t i = 0; i < size; i++){
-        if( vectors[i].Size() != cols_){
-            throw std::runtime_error("Cant create matrix from vectors different lengh");
+    for (size_t i = 0; i < size; i++) {
+        if (vectors[i].Size() != cols_) {
+            throw std::runtime_error(
+                "Cant create matrix from vectors different lengh");
         }
     }
 }
@@ -46,13 +47,17 @@ MMatrix::MMatrix(const MVector &vec, Orientation orient) {
         rows_ = capacity_ = 1;
         cols_ = vec.Size();
         arr_ = new MVector[rows_];
+        //        arr_[0] = new MVector(vec.Size());
         arr_[0] = vec;
+        //        for (size_t i = 0; i < vec.Size(); i++){
+        //            arr_[0][i] = vec[i];
+        //        }
     } else {
         cols_ = 1;
         rows_ = capacity_ = vec.Size();
         arr_ = new MVector[rows_];
         for (size_t i = 0; i < rows_; i++) {
-            arr_[i] = *(new MVector(cols_));
+            arr_[i] = MVector(cols_);
             arr_[i][0] = vec[i];
         }
     }

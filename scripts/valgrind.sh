@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 TEST_FILES="./build/tests/tests"
-
+chmod +x ${TEST_FILES}
 VG_LOG="./build/valgrind.log"
 
 NO_LOST_PATTERN="All heap blocks were freed -- no leaks are possible"

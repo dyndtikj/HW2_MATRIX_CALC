@@ -1,7 +1,8 @@
 #include <gtest/gtest.h>
-#include "m_vector.h"
+
 #include "m_matrix.h"
-bool CmpVec(const MVector& vec, const std::initializer_list<double>& il){
+#include "m_vector.h"
+bool CmpVec(const MVector& vec, const std::initializer_list<double>& il) {
     if (vec.Size() != il.size()) {
         return false;
     }
@@ -25,7 +26,7 @@ TEST(TestConstructorsVector, WithParams) {
     MVector vec(10, 2);
     EXPECT_EQ(vec.Size(), 10);
     EXPECT_EQ(vec.Capacity(), 10);
-    EXPECT_TRUE(CmpVec(vec, {2, 2, 2, 2, 2, 2, 2 , 2, 2, 2}));
+    EXPECT_TRUE(CmpVec(vec, {2, 2, 2, 2, 2, 2, 2, 2, 2, 2}));
 }
 
 TEST(TestConstructorsVector, InitialiserList) {
@@ -49,7 +50,9 @@ TEST(TestConstructorsVector, CopyAssigment) {
     EXPECT_EQ(vec2.Size(), 4);
     EXPECT_EQ(vec2.Capacity(), 4);
     EXPECT_TRUE(CmpVec(vec2, {2, 112, 1, 111}));
-
+    auto vec3 = vec2;
+    vec3[0] = 11111;
+    vec2.Print();
 }
 TEST(TestFuncVector, PushBack) {
     MVector vec({2, 112});
@@ -89,9 +92,7 @@ TEST(TestFuncVector, Back) {
     EXPECT_EQ(vec.Back(), 6);
 }
 
-
-TEST(TestOperatorsVector, AccessInIndex)
-{
+TEST(TestOperatorsVector, AccessInIndex) {
     MVector vec{1, 2, 4, 5, 7, 8};
     EXPECT_EQ(vec[0], 1);
     vec[0] = 100;
@@ -144,7 +145,7 @@ TEST(TestOperatorsVector, WithMatrixes) {
     MMatrix mat({{1, 2}, {3, 4}, {5, 6}});
     vec *= mat;
     EXPECT_TRUE(CmpVec(vec, {22, 28}));
-//    MVector &operator*=(MVector &left, MMatrix &right);
+    //    MVector &operator*=(MVector &left, MMatrix &right);
 }
 TEST(TestOperatorsVector, WithValues) {
     MVector vec2{5, 6, 7, 8, 9, 10};
@@ -152,17 +153,17 @@ TEST(TestOperatorsVector, WithValues) {
     EXPECT_TRUE(CmpVec(res1, {15, 18, 21, 24, 27, 30}));
 
     MVector vec3{1, 2, 3};
-    vec3*=2;
+    vec3 *= 2;
     EXPECT_TRUE(CmpVec(vec3, {2, 4, 6}));
 
     MVector res2 = vec2 + 2;
     EXPECT_TRUE(CmpVec(res2, {7, 8, 9, 10, 11, 12}));
 
     MVector vec4{1, 2, 3, 4, 5};
-    vec4+=3;
+    vec4 += 3;
     EXPECT_TRUE(CmpVec(vec4, {4, 5, 6, 7, 8}));
 
-    vec4-=3;
+    vec4 -= 3;
     EXPECT_TRUE(CmpVec(vec4, {1, 2, 3, 4, 5}));
 }
 
