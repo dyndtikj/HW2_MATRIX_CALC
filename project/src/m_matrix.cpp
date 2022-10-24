@@ -32,7 +32,13 @@ MMatrix &MMatrix::operator=(const MMatrix &other) {
 }
 
 MMatrix::MMatrix(MVector *vectors, const size_t &size)
-    : arr_(vectors), rows_(size), cols_(vectors[0].Size()), capacity_(rows_) {}
+    : arr_(vectors), rows_(size), cols_(vectors[0].Size()), capacity_(rows_) {
+    for (size_t i = 0; i < size; i++){
+        if( vectors[i].Size() != cols_){
+            throw std::runtime_error("Cant create matrix from vectors different lengh");
+        }
+    }
+}
 
 // vector - row by default
 MMatrix::MMatrix(const MVector &vec, Orientation orient) {
