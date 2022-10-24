@@ -41,14 +41,12 @@ TEST(TestConstructorsMatrix, WithParams) {
 }
 TEST(TestConstructorsMatrix, FromVectorsPointer) {
     // MMatrix(MVector *vectors, const size_t &rows);
-    MVector* vecs = new MVector[3]{MVector(2, 1), MVector{2, 2}, MVector{2, 3}};
-    //
-    //    MMatrix mat(vecs, 3);
-    //    EXPECT_EQ(mat.Rows(), 3);
-    //    EXPECT_EQ(mat.Cols(), 2);
-    //    EXPECT_EQ(mat.Capacity(), 3);
-    //    EXPECT_TRUE(CmpMat(mat,{{1, 1},{2, 2}, {3, 3}}));
-    delete[] vecs;
+    MVector* vecs = new MVector[3]{MVector{12, 2}, MVector{2, 2}, MVector{2, 3}};
+    MMatrix mat(vecs, 3);
+    EXPECT_EQ(mat.Rows(), 3);
+    EXPECT_EQ(mat.Cols(), 2);
+    EXPECT_EQ(mat.Capacity(), 3);
+    EXPECT_TRUE(CmpMat(mat,{{12, 2},{2, 2}, {2, 3}}));
 }
 
 // vector - row by default

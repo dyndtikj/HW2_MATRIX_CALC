@@ -50,9 +50,6 @@ TEST(TestConstructorsVector, CopyAssigment) {
     EXPECT_EQ(vec2.Size(), 4);
     EXPECT_EQ(vec2.Capacity(), 4);
     EXPECT_TRUE(CmpVec(vec2, {2, 112, 1, 111}));
-    auto vec3 = vec2;
-    vec3[0] = 11111;
-    vec2.Print();
 }
 TEST(TestFuncVector, PushBack) {
     MVector vec({2, 112});

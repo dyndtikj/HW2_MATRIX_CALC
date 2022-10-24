@@ -47,11 +47,7 @@ MMatrix::MMatrix(const MVector &vec, Orientation orient) {
         rows_ = capacity_ = 1;
         cols_ = vec.Size();
         arr_ = new MVector[rows_];
-        //        arr_[0] = new MVector(vec.Size());
         arr_[0] = vec;
-        //        for (size_t i = 0; i < vec.Size(); i++){
-        //            arr_[0][i] = vec[i];
-        //        }
     } else {
         cols_ = 1;
         rows_ = capacity_ = vec.Size();

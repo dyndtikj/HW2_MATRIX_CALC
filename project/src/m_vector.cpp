@@ -18,7 +18,8 @@ MVector::MVector(const MVector &other)
 }
 
 MVector &MVector::operator=(const MVector &other) {
-    delete[] arr_;
+    if (arr_)
+        delete[] arr_;
     arr_ = new double[other.capacity_];
     capacity_ = other.capacity_;
     size_ = other.size_;
