@@ -130,8 +130,8 @@ TEST(TestOperatorsVector, WithMatrixes) {
     MMatrix mat({{1, 2}, {3, 4}, {5, 6}});
     vec *= mat;
     EXPECT_TRUE(CmpVec(vec, {22, 28}));
-    //    MVector &operator*=(MVector &left, MMatrix &right);
 }
+
 TEST(TestOperatorsVector, WithValues) {
     MVector vec2{5, 6, 7, 8, 9, 10};
     MVector res1 = vec2 * 3;
