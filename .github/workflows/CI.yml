@@ -9,7 +9,7 @@ on:
 jobs:
   checks:
     runs-on: ubuntu-latest
-    container: leshiy1295/gcc_linters_valgrind_cmake_gtest
+    container: dyndtikj/cpp_gtest_linters
     steps:
       - uses: actions/checkout@v3
       - name: prepare
@@ -22,7 +22,7 @@ jobs:
 
   build:
     runs-on: ubuntu-latest
-    container: leshiy1295/gcc_linters_valgrind_cmake_gtest
+    container: dyndtikj/cpp_gtest_linters
     steps:
       - uses: actions/checkout@v3
       - name: build
@@ -36,7 +36,7 @@ jobs:
 
   unit_tests:
     runs-on: ubuntu-latest
-    container: leshiy1295/gcc_linters_valgrind_cmake_gtest
+    container: dyndtikj/cpp_gtest_linters
     steps:
       - uses: actions/checkout@v2
       - name: run tests
@@ -50,7 +50,7 @@ jobs:
 
   valgrind_and_cov:
     runs-on: ubuntu-latest
-    container: leshiy1295/gcc_linters_valgrind_cmake_gtest
+    container: dyndtikj/cpp_gtest_linters
     needs: [unit_tests]
     steps:
       - uses: actions/checkout@v3
