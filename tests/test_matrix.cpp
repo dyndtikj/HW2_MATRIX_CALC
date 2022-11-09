@@ -59,8 +59,6 @@ TEST(TestConstructorsMatrix, CopyOther) {
     EXPECT_EQ(mat2.Cols(), 3);
     EXPECT_EQ(mat2.Capacity(), 2);
     EXPECT_TRUE(CmpMat(mat2, {{1, 2, 3}, {4, 5, 6}}));
-    mat2[1][0] = 100;
-    mat2[1][0] = 200;
     EXPECT_TRUE(CmpMat(mat1, {{1, 2, 3}, {4, 5, 6}}));
     //    MMatrix(MMatrix &other);
 }
@@ -71,9 +69,6 @@ TEST(TestConstructorsMatrix, AssignCopyOther) {
     EXPECT_EQ(mat2.Rows(), 2);
     EXPECT_EQ(mat2.Cols(), 3);
     EXPECT_EQ(mat2.Capacity(), 2);
-    EXPECT_TRUE(CmpMat(mat2, {{1, 2, 3}, {4, 5, 6}}));
-    mat2[0][0] = 100;
-    mat2[0][0] = 200;
     EXPECT_TRUE(CmpMat(mat1, {{1, 2, 3}, {4, 5, 6}}));
 }
 TEST(TestConstructorsMatrix, InitialiserList) {

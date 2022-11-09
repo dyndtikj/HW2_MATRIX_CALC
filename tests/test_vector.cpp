@@ -3,7 +3,6 @@
 #include "m_matrix.h"
 #include "m_vector.h"
 
-
 TEST(TestConstructorsVector, Default) {
     MVector vec;
     EXPECT_EQ(vec.Size(), 0);

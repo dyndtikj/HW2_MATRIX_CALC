@@ -305,22 +305,20 @@ MMatrix MatMul(const MMatrix &left, const MMatrix &right) {
     return mul;
 }
 
-bool operator==(const MMatrix &l_mat, const MMatrix &r_mat){
-    if (l_mat.Rows() != r_mat.Rows() || l_mat.Cols() != r_mat.Cols() ) {
+bool operator==(const MMatrix &l_mat, const MMatrix &r_mat) {
+    if ((l_mat.Rows() != r_mat.Rows()) || (l_mat.Cols() != r_mat.Cols())) {
         return false;
     }
     for (size_t i = 0; i < l_mat.Rows(); i++) {
         for (size_t j = 0; j < l_mat.Cols(); j++) {
             // double numbers compare ...
-            if (std::abs(l_mat[i][j] - r_mat[i][j]) >
-                0.00000001) {
+            if (std::abs(l_mat[i][j] - r_mat[i][j]) > 0.00000001) {
                 return false;
             }
         }
     }
     return true;
 }
-
 
 bool operator==(const MMatrix &mat,
                 std::initializer_list<std::initializer_list<double>> il) {
@@ -522,7 +520,7 @@ double MMatrix::GetDet() const {
     if (rows_ == 2) {
         return arr_[0][0] * arr_[1][1] - arr_[0][1] * arr_[1][0];
     }
-    short sign = 1;
+    int8_t sign = 1;
     double det = 0;
     for (size_t i = 0; i < cols_; ++i) {
         det += sign * arr_[0][i] * GetMinor(0, i);
