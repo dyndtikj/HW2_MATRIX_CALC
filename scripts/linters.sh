@@ -21,7 +21,6 @@ function check_log() {
     fi
 }
 
-# TODO fix clang-diagnostic-error (includind libs)
 print_header "RUN clang-tidy"
 check_log "clang-tidy ./tests/*.cpp -warnings-as-errors=* -extra-arg=-std=c++17 -- -Iproject/include" "Error (?:reading|while processing)"
 

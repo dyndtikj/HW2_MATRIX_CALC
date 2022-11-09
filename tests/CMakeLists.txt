@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.0)
 project(tests)
-set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD 20)
 
 # Compilation flags
 string(APPEND CMAKE_CXX_FLAGS " -g -Wpedantic -Werror -Wall -Wextra")
@@ -25,4 +25,3 @@ aux_source_directory(${CMAKE_CURRENT_SOURCE_DIR} SRC)
 add_executable(${PROJECT_NAME} ${SRC})
 target_link_libraries(${PROJECT_NAME} hw1_matrix GTest::gtest_main)
 gtest_discover_tests(${PROJECT_NAME})
-#add_test(NAME unit_tests COMMAND ${PROJECT_NAME})

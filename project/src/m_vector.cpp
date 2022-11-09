@@ -18,8 +18,7 @@ MVector::MVector(const MVector &other)
 }
 
 MVector &MVector::operator=(const MVector &other) {
-    if (arr_)
-        delete[] arr_;
+    if (arr_) delete[] arr_;
     arr_ = new double[other.capacity_];
     capacity_ = other.capacity_;
     size_ = other.size_;
@@ -217,6 +216,23 @@ MVector &operator-=(MVector &left, const double &right) {
 MVector &operator*=(MVector &left, const double &right) {
     left.MulValue(right);
     return left;
+}
+
+bool operator==(const MVector &vec, const std::initializer_list<double> &il) {
+    if (vec.Size() != il.size()) {
+        return false;
+    }
+    for (size_t i = 0; i < vec.Size(); i++) {
+        // double numbers compare ...
+        if (std::abs(vec[i] - *(il.begin() + i)) > 0.00000001) {
+            return false;
+        }
+    }
+    return true;
+}
+
+bool CmpVec(const MVector &vec, const std::initializer_list<double> &il) {
+    return vec == il;
 }
 
 MVector MVector::operator()(const size_t &begin, const size_t &end,

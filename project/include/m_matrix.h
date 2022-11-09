@@ -17,7 +17,6 @@ class MMatrix {
     size_t cols_;
     size_t capacity_;
 
-   private:
     void grow();
 
    public:
@@ -106,3 +105,9 @@ MMatrix operator-(const MMatrix &left, const double &right);
 
 MMatrix &operator+=(MMatrix &left, const double &right);
 MMatrix &operator-=(MMatrix &left, const double &right);
+
+bool operator==(const MMatrix &l_mat, const MMatrix &r_mat);
+bool operator==(const MMatrix &mat,
+                std::initializer_list<std::initializer_list<double>> il);
+bool CmpMat(const MMatrix &mat,
+            std::initializer_list<std::initializer_list<double>> il);

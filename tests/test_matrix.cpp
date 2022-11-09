@@ -3,26 +3,6 @@
 
 #include "m_matrix.h"
 
-// implemented in test_vector.cpp
-extern bool CmpVec(const MVector& vec,
-                   const std::initializer_list<double>& init_list);
-
-bool CmpMat(const MMatrix& mat,
-            std::initializer_list<std::initializer_list<double>> il) {
-    if (mat.Rows() != il.size()) {
-        return false;
-    }
-    for (size_t i = 0; i < mat.Rows(); i++) {
-        for (size_t j = 0; j < mat.Cols(); j++) {
-            // double numbers compare ...
-            if (std::abs(mat[i][j] - *((il.begin() + i)->begin() + j)) >
-                0.00000001) {
-                return false;
-            }
-        }
-    }
-    return true;
-}
 TEST(TestConstructorsMatrix, Default) {
     MMatrix mat;
     EXPECT_EQ(mat.Rows(), 0);
@@ -38,15 +18,18 @@ TEST(TestConstructorsMatrix, WithParams) {
     EXPECT_EQ(mat.Capacity(), 3);
     EXPECT_TRUE(
         CmpMat(mat, {{12, 12, 12, 12}, {12, 12, 12, 12}, {12, 12, 12, 12}}));
+    MMatrix mat2(3, 4, 12);
+    EXPECT_TRUE(mat == mat2);
 }
 TEST(TestConstructorsMatrix, FromVectorsPointer) {
     // MMatrix(MVector *vectors, const size_t &rows);
-    MVector* vecs = new MVector[3]{MVector{12, 2}, MVector{2, 2}, MVector{2, 3}};
+    MVector* vecs =
+        new MVector[3]{MVector{12, 2}, MVector{2, 2}, MVector{2, 3}};
     MMatrix mat(vecs, 3);
     EXPECT_EQ(mat.Rows(), 3);
     EXPECT_EQ(mat.Cols(), 2);
     EXPECT_EQ(mat.Capacity(), 3);
-    EXPECT_TRUE(CmpMat(mat,{{12, 2},{2, 2}, {2, 3}}));
+    EXPECT_TRUE(CmpMat(mat, {{12, 2}, {2, 2}, {2, 3}}));
 }
 
 // vector - row by default
@@ -77,6 +60,7 @@ TEST(TestConstructorsMatrix, CopyOther) {
     EXPECT_EQ(mat2.Capacity(), 2);
     EXPECT_TRUE(CmpMat(mat2, {{1, 2, 3}, {4, 5, 6}}));
     mat2[1][0] = 100;
+    mat2[1][0] = 200;
     EXPECT_TRUE(CmpMat(mat1, {{1, 2, 3}, {4, 5, 6}}));
     //    MMatrix(MMatrix &other);
 }
@@ -89,6 +73,7 @@ TEST(TestConstructorsMatrix, AssignCopyOther) {
     EXPECT_EQ(mat2.Capacity(), 2);
     EXPECT_TRUE(CmpMat(mat2, {{1, 2, 3}, {4, 5, 6}}));
     mat2[0][0] = 100;
+    mat2[0][0] = 200;
     EXPECT_TRUE(CmpMat(mat1, {{1, 2, 3}, {4, 5, 6}}));
 }
 TEST(TestConstructorsMatrix, InitialiserList) {
@@ -108,8 +93,8 @@ TEST(TestFuncMatrix, PushBackRaw) {
     EXPECT_EQ(mat.Cols(), 3);
     EXPECT_EQ(mat.Capacity(), 4);
     EXPECT_TRUE(CmpMat(mat, {{1, 2, 3}, {4, 5, 6}, {7, 8, 9}}));
-    //    void PushBackR(const MVector &row);
 }
+
 TEST(TestFuncMatrix, PushBackColumn) {
     //    void PushBackC(const MVector &col);
     MMatrix mat({{1, 2, 3}, {4, 5, 6}});

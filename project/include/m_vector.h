@@ -13,7 +13,6 @@ class MVector {
     size_t size_;
     size_t capacity_;
 
-   private:
     void grow();
 
    public:
@@ -62,5 +61,8 @@ MVector operator-(const MVector &left, const double &right);
 
 MVector &operator+=(MVector &left, const double &right);
 MVector &operator-=(MVector &left, const double &right);
+
+bool operator==(const MVector &vec, const std::initializer_list<double> &il);
+bool CmpVec(const MVector &vec, const std::initializer_list<double> &il);
 
 std::ostream &operator<<(std::ostream &os, const MVector &vec);

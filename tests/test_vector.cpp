@@ -2,18 +2,7 @@
 
 #include "m_matrix.h"
 #include "m_vector.h"
-bool CmpVec(const MVector& vec, const std::initializer_list<double>& il) {
-    if (vec.Size() != il.size()) {
-        return false;
-    }
-    for (size_t i = 0; i < vec.Size(); i++) {
-        // double numbers compare ...
-        if (std::abs(vec[i] - *(il.begin() + i)) > 0.00000001) {
-            return false;
-        }
-    }
-    return true;
-}
+
 
 TEST(TestConstructorsVector, Default) {
     MVector vec;

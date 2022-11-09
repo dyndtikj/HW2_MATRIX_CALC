@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.18)
 project(hw1_matrix_main)
 
-set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD 20)
 
 option(BUILD_TESTS "Build tests" ON)
 
